@@ -2,19 +2,28 @@
 #airquality assignment
 #1.Clean the data
 clean_airquality <- airquality[complete.cases(airquality), ]
+
 #2.Plot the data as scatter plot
 scatter.smooth(x=clean_airquality$Ozone,y=clean_airquality$Day,main="OzoneVsDay")
+
 #3.Create a training dataset with a 50% split 
 nrow(clean_airquality) 
+
 #we have 111 rows in the clean dataset
 training_dataset<-clean_airquality[1:55,]
 test_dataset<-clean_airquality[56:111,]
+
 #Creating regression model on ozone and day of airquality
 regression_model<-lm(Ozone~Day,data=training_dataset)
+
 #Predict the relationshop between ozone and day of the airquality on test data set using our generated regression model
 prediction_result <-predict(regression_model,test_dataset)
+
 #Results of prediction
 actual_prediction_vaules<-data.frame(cbind(actuals=test_dataset$Ozone,predicteds=prediction_result))
+#in class
+actual_prediction_vaules<-data.frame(cbind(actuals=training_dataset$Ozone,predicteds=prediction_result))
+
 actual_prediction_vaules
     actuals predicteds
 89       82   35.18095
@@ -73,3 +82,34 @@ actual_prediction_vaules
 151      14   35.18095
 152      18   34.91597
 153      20   34.65100
+-------------------------------------
+#Load the dataset
+data<-airquality
+
+#Clean the data
+clean_airquality <- airquality[complete.cases(airquality), ]
+
+#Take Average for Ozone
+mean(clean_airquality$Ozone)
+
+#Replace all NA's in Ozone with above average
+airquality$Ozone[is.na(airquality$Ozone)] <- 42
+
+#Take Average of Solar.R
+mean(clean_airquality$Solar.R)
+
+#Replace all NA's in Solar.R with above average
+airquality$Solar.R[is.na(airquality$Solar.R)] <- 185
+
+#cbind and rbind functions
+variable1<-c(1:100)
+variable2<-c(101:200)
+variable3<-cbind(variable1,variable2)
+variable4<-(1:99)
+cbind(variable1,variable2,variable4)
+
+
+
+
+
+
